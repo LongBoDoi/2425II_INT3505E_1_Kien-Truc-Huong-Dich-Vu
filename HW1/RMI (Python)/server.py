@@ -27,7 +27,7 @@ class OrderService:
 
 # Chạy server
 def start_server():
-    daemon = Pyro4.Daemon(host="14.225.254.152")   # IP của server
+    daemon = Pyro4.Daemon(host="192.168.211.129")   # IP của server
     ns = Pyro4.locateNS()
     uri = daemon.register(OrderService)
     ns.register("orders.service", uri, safe=True)

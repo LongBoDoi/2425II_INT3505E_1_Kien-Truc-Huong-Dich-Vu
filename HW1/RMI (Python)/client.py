@@ -1,7 +1,7 @@
 import Pyro4
 
 # Dùng IP của máy server
-server_ip = "14.225.254.152"
+server_ip = "192.168.211.129"
 
 ns = Pyro4.locateNS(host=server_ip)  # Tìm tên server Pyro
 uri = ns.lookup("orders.service")  # Lấy uri service
