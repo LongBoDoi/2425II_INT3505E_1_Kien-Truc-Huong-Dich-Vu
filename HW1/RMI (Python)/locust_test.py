@@ -19,6 +19,7 @@ class PyroUser(HttpUser):
         start_time = time.time()
         try:
             response = order_service.calculateTotal(product_id, quantity)
+
             total_time = int((time.time() - start_time) * 1000)  # Tính thời gian request theo ms
             self.environment.events.request.fire(
                 request_type="PYRO",
@@ -26,6 +27,7 @@ class PyroUser(HttpUser):
                 response_time=total_time,
                 response_length=len(str(response))
             )
+            
             print(response)
         except Exception as e:
             total_time = int((time.time() - start_time) * 1000)

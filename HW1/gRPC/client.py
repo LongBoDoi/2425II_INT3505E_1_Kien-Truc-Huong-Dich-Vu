@@ -17,7 +17,7 @@ class GRPCClient:
         return self.stub.CalculateTotal(request)
 
 class GRPCUser(User):
-    wait_time = between(1, 3)  # Thoi gian cho giua moi request
+    wait_time = between(1, 3)  # Thời gian chờ giữa mỗi request
     client = None
 
     def on_start(self):
@@ -25,7 +25,7 @@ class GRPCUser(User):
 
     @task
     def test_order_service(self):
-        # Random san pham, so luong
+        # Random sản phẩm, số lượng
         product_id = f"P{random.randint(1, 1000):04d}" 
         quantity = random.randint(1, 10)
 
@@ -41,7 +41,7 @@ class GRPCUser(User):
                 response_length=len(response.message)
             )
             
-            print(response)
+            print(response.message)
         except Exception as e:
             total_time = int((time.time() - start_time) * 1000)
             events.request.fire(
