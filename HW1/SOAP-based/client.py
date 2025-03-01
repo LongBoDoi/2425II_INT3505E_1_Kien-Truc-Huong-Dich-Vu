@@ -29,7 +29,7 @@ class SoapUser(User):
             print(f"Response: {response}")
         except Exception as e:
             total_time = int((time.time() - start_time) * 1000)
-            self.environment.events.request_failure.fire(
+            self.environment.events.request.fire(
                 request_type="SOAP",
                 name="processOrder",
                 response_time=total_time,
