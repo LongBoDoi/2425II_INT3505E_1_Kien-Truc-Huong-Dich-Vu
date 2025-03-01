@@ -1,0 +1,42 @@
+<definitions name="OrderService"
+   targetNamespace="http://www.example.com/order"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.example.com/order"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="ProcessOrderRequest">
+      <part name="productId" type="xsd:string"/>
+      <part name="quantity" type="xsd:int"/>
+   </message>
+   <message name="ProcessOrderResponse">
+      <part name="orderStatus" type="xsd:string"/>
+   </message>
+
+   <portType name="Order_PortType">
+      <operation name="processOrder">
+         <input message="tns:ProcessOrderRequest"/>
+         <output message="tns:ProcessOrderResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="Order_Binding" type="tns:Order_PortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="processOrder">
+         <soap:operation soapAction="processOrder"/>
+         <input>
+            <soap:body use="literal" namespace="http://www.example.com/order"/>
+         </input>
+         <output>
+            <soap:body use="literal" namespace="http://www.example.com/order"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="Order_Service">
+      <documentation>WSDL File for OrderService</documentation>
+      <port binding="tns:Order_Binding" name="Order_Port">
+         <soap:address location="http://192.168.211.129:5000/order-service"/>
+      </port>
+   </service>
+</definitions>
