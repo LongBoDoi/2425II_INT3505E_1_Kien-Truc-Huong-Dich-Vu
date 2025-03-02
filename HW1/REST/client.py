@@ -23,7 +23,7 @@ class RestUser(HttpUser):
                 request_type="REST",
                 name="create-order",
                 response_time=total_time,
-                response_length=len(str(response))
+                response_length=len(str(response.json()))
             )
 
             print(f"Response: {response.json()}")
