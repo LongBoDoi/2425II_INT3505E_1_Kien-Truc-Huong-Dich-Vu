@@ -12,3 +12,16 @@ BACKEND
 2. Cách chạy Backend
    - B1: Tại thư mục PastebinBackend/PastebinBackend, mở CMD
    - B2: Chạy lệnh "dotnet run" -> Thấy hiện chạy trên cổng 5229 là OK
+
+- Các hàm của BackEnd:
+   - Tạo và lưu mã paste mới:
+      - Url: http://localhost:5229/Paste/CreatePaste
+      - Method: POST
+      - Body:
+         - content: Nội dung văn bản cần tạo mã
+         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31"
+      - Trả về: Mã paste được tạo (16 ký tự)
+   - Lấy nội dung mã paste:
+      - Url: http://localhost:5229/Paste/GetPasteContent?pasteKey={mã paste}
+      - Method: GET
+      - Trả về: Nội dung văn bản của mã paste
