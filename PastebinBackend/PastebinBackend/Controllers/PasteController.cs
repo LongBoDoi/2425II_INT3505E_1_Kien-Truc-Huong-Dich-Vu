@@ -41,31 +41,39 @@ namespace PastebinBackend.Controllers
         /// <returns></returns>
         public IActionResult GetPasteContent(string pasteKey)
         {
-            Paste? paste = _context.Pastes.FirstOrDefault(p => p.PasteKey == pasteKey);
-            if (paste != null)
+            try
             {
-                Analytic? analytic = _context.Analytics.FirstOrDefault(a => a.PasteId == paste.Id && a.ViewDate.Date == DateTime.UtcNow.Date);
-                if (analytic != null)
+                Paste? paste = _context.Pastes.FirstOrDefault(p => p.PasteKey == pasteKey);
+                if (paste != null)
                 {
-                    analytic.ViewsCount++;
-                } else
-                {
-                    analytic = new Analytic
+                    Analytic? analytic = _context.Analytics.FirstOrDefault(a => a.PasteId == paste.Id && a.ViewDate.Date == DateTime.UtcNow.Date);
+                    if (analytic != null)
                     {
-                        PasteId = paste.Id,
-                        ViewDate = DateTime.UtcNow,
-                        ViewsCount = 1
-                    };
-                    _context.Analytics.Add(analytic);
-                }
-                paste.Views++;
+                        analytic.ViewsCount++;
+                    }
+                    else
+                    {
+                        analytic = new Analytic
+                        {
+                            PasteId = paste.Id,
+                            ViewDate = DateTime.UtcNow,
+                            ViewsCount = 1
+                        };
+                        _context.Analytics.Add(analytic);
+                    }
+                    paste.Views++;
 
-                if (_context.SaveChanges() > 0)
-                {
-                    return Content(paste.Content, "text/plain");
+                    if (_context.SaveChanges() > 0)
+                    {
+                        return Content(paste.Content, "text/plain");
+                    }
                 }
+
+                return Content("Không tìm thấy mã paste");
+            } catch (Exception e)
+            {
+                return Content($"Có lỗi xảy ra: {e.Message}");
             }
-            return Content("Có lỗi xảy ra.");
         }
     }
 }
