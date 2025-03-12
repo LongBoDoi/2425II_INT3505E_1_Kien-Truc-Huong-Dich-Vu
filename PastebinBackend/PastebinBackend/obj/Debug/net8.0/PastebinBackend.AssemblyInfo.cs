@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PastebinBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a4035db5454132bcfbfb422c72d36f154062db2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d96d6ad4321d90c681b56d1b94bb0b6e8ff9ed0")]
 [assembly: System.Reflection.AssemblyProductAttribute("PastebinBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PastebinBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

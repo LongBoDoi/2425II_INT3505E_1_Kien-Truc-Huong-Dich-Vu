@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\Pastebin Backend\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj": {}
+    "E:\\Projects\\Kien truc huong dich vu\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\Pastebin Backend\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj": {
+    "E:\\Projects\\Kien truc huong dich vu\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\Pastebin Backend\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj",
+        "projectUniqueName": "E:\\Projects\\Kien truc huong dich vu\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj",
         "projectName": "PastebinBackend",
-        "projectPath": "E:\\Projects\\Pastebin Backend\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj",
+        "projectPath": "E:\\Projects\\Kien truc huong dich vu\\PastebinBackend\\PastebinBackend\\PastebinBackend.csproj",
         "packagesPath": "C:\\Users\\Manh Long\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\Pastebin Backend\\PastebinBackend\\PastebinBackend\\obj\\",
+        "outputPath": "E:\\Projects\\Kien truc huong dich vu\\PastebinBackend\\PastebinBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "E:\\Visual Studio Shared\\NuGetPackages"
