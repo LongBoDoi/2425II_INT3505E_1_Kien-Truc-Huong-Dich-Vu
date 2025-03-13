@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PastebinBackend.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace PastebinBackend.Models
 {
@@ -15,7 +16,7 @@ namespace PastebinBackend.Models
         /// </summary>
         [Required]
         [StringLength(16)]
-        public string PasteKey { get; set; } = Guid.NewGuid().ToString("N").Substring(0, 8);
+        public string PasteKey { get; set; } = Guid.NewGuid().ToString("N").Substring(0, 16);
 
         /// <summary>
         /// Nội dung văn bản
@@ -37,5 +38,10 @@ namespace PastebinBackend.Models
         /// Số lần xem
         /// </summary>
         public int Views { get; set; } = 0;
+
+        /// <summary>
+        /// Quyền riêng tư mã paste
+        /// </summary>
+        public EnumPasteExposure Exposure { get; set; }
     }
 }

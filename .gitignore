@@ -1,4 +1,7 @@
 **/__pycache__/
 /.vs
-/PastebinBackend/.vs/PastebinBackend/FileContentIndex
-/PastebinBackend/.vs/PastebinBackend/FileContentIndex
+/PastebinBackend/.vs
+/PastebinBackend/PastebinBackend/bin
+/PastebinBackend/PastebinBackend/obj
+/PastebinBackend/PastebinBackend/bin/Debug/net8.0
+/PastebinBackend/PastebinBackend/obj

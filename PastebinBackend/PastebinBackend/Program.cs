@@ -14,6 +14,17 @@ if (!String.IsNullOrEmpty(connectionString))
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+    );
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +36,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.UseCors("CorsPolicy");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Paste}/{action=Create}"

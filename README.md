@@ -19,9 +19,29 @@ BACKEND
       - Method: POST
       - Body:
          - content: Nội dung văn bản cần tạo mã
-         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31"
+         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
+         - exposure: Quyền riêng tư mã paste (0: Public, 1: Private)
       - Trả về: Mã paste được tạo (16 ký tự)
-   - Lấy nội dung mã paste:
+   - Lấy dữ liệu mã paste:
       - Url: http://localhost:5229/Paste/GetPasteContent?pasteKey={mã paste}
       - Method: GET
-      - Trả về: Nội dung văn bản của mã paste
+      - Trả về: Dữ liệu của mã paste
+   - Lấy danh sách mã paste public được tạo gần đây:
+      - Url: http://localhost:5229/Paste/GetRecentPastes
+      - Method: GET
+      - Trả về: Danh sách mã paste, tối đa 10 bản ghi
+   - Sửa mã paste:
+      - Url: http://localhost:5229/Paste/UpdatePaste
+      - Method: POST
+      - Body:
+         - pasteKey: Mã paste
+         - content: Nội dung văn bản cần tạo mã
+         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
+         - exposure: Quyền riêng tư mã paste (0: Public, 1: Private)
+      - Trả về: Trạng thái cập nhật
+   - Xoá mã paste:
+      - Url: http://localhost:5229/Paste/DeletePaste
+      - Method: POST
+      - Body:
+         - pasteKey: Mã paste
+      - Trả về: Trạng thái xoá
