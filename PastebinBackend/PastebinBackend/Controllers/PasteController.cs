@@ -47,7 +47,7 @@ namespace PastebinBackend.Controllers
             try
             {
                 Paste? paste = _context.Pastes.FirstOrDefault(p => p.PasteKey == pasteKey);
-                if (paste != null)
+                if (paste != null && paste.ExpiresAt > DateTime.UtcNow)
                 {
                     //Analytic? analytic = _context.Analytics.FirstOrDefault(a => a.PasteId == paste.Id && a.ViewDate.Date == DateTime.UtcNow.Date);
                     //if (analytic != null)
@@ -72,7 +72,7 @@ namespace PastebinBackend.Controllers
                     }
                 }
 
-                return Content("Không tìm thấy mã paste");
+                return Content("Mã paste không tồn tại hoặc đã hết hạn");
             } catch (Exception e)
             {
                 return Content($"Có lỗi xảy ra: {e.Message}");
@@ -88,7 +88,8 @@ namespace PastebinBackend.Controllers
         {
             try
             {
-                List<Paste> pastes = _context.Pastes.Where(p => p.Exposure == EnumPasteExposure.Public).OrderByDescending(p => p.CreatedAt).Take(10).ToList();
+                DateTime now = DateTime.UtcNow;
+                List<Paste> pastes = _context.Pastes.Where(p => p.Exposure == EnumPasteExposure.Public && p.ExpiresAt > now).OrderByDescending(p => p.CreatedAt).Take(10).ToList();
                 if (pastes.Any())
                 {
                     return Content(String.Join("|", pastes.Select(p => $"pasteKey={p.PasteKey};createdAt={p.CreatedAt:yyyy-MM-dd HH:mm:ss};pasteName={p.PasteName}")));
