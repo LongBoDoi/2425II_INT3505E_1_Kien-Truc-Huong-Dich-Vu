@@ -21,11 +21,12 @@ namespace PastebinBackend.Controllers
         /// <param name="expiresAt">Thời gian hết hạn</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreatePaste(string content, DateTime? expiresAt, EnumPasteExposure exposure)
+        public IActionResult CreatePaste(string content, EnumPasteExposure exposure, string? pasteName, DateTime? expiresAt)
         {
             var paste = new Paste
             {
                 Content = content,
+                PasteName = pasteName ?? String.Empty,
                 ExpiresAt = expiresAt,
                 Exposure = exposure
             };
@@ -67,7 +68,7 @@ namespace PastebinBackend.Controllers
 
                     if (_context.SaveChanges() > 0)
                     {
-                        return Content($"content={paste.Content};createdAt={paste.CreatedAt:yyyy-MM-dd HH:mm:ss};views={paste.Views}");
+                        return Content($"content={paste.Content};createdAt={paste.CreatedAt:yyyy-MM-dd HH:mm:ss};views={paste.Views};pasteName={paste.PasteName}");
                     }
                 }
 
@@ -108,7 +109,7 @@ namespace PastebinBackend.Controllers
         /// <param name="expiresAt">Thời gian hết hạn</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult UpdatePaste(string pasteKey, string content, DateTime? expiresAt, EnumPasteExposure exposure)
+        public IActionResult UpdatePaste(string pasteKey, string content, EnumPasteExposure exposure, string? pasteName, DateTime? expiresAt)
         {
             try
             {
@@ -116,6 +117,7 @@ namespace PastebinBackend.Controllers
                 if (paste != null)
                 {
                     paste.Content = content;
+                    paste.PasteName = pasteName ?? String.Empty;
                     paste.ExpiresAt = expiresAt;
                     paste.Exposure = exposure;
 

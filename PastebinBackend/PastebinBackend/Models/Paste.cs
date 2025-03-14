@@ -19,6 +19,12 @@ namespace PastebinBackend.Models
         public string PasteKey { get; set; } = Guid.NewGuid().ToString("N").Substring(0, 16);
 
         /// <summary>
+        /// Mã paste
+        /// </summary>
+        [StringLength(255)]
+        public string PasteName { get; set; } = String.Empty;
+
+        /// <summary>
         /// Nội dung văn bản
         /// </summary>
         [Required]

@@ -10,8 +10,7 @@ BACKEND
    - B2: Tìm file appsetting.json -> Sửa lại trường DefaultConnection theo thông tin MySQL trên máy (nếu cần)
    - B3: Mở cmd, chạy lệnh "dotnet ef database update" -> Hiện "done" là thành công
 2. Cách chạy Backend
-   - B1: Tại thư mục PastebinBackend/PastebinBackend, mở CMD
-   - B2: Chạy lệnh "dotnet run" -> Thấy hiện chạy trên cổng 5229 là OK
+   - B1: Tại thư mục PastebinBackend/PastebinBackend, chạy file "Run BackEnd.bat", thấy thông báo chạy trên cổng 5229 là OK
 
 - Các hàm của BackEnd:
    - Tạo và lưu mã paste mới:
@@ -19,8 +18,9 @@ BACKEND
       - Method: POST
       - Body:
          - content: Nội dung văn bản cần tạo mã
-         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
          - exposure: Quyền riêng tư mã paste (0: Public, 1: Private)
+         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
+         - pasteName: Tên mã paste (nếu có)
       - Trả về: Mã paste được tạo (16 ký tự)
    - Lấy dữ liệu mã paste:
       - Url: http://localhost:5229/Paste/GetPasteContent?pasteKey={mã paste}
@@ -36,8 +36,9 @@ BACKEND
       - Body:
          - pasteKey: Mã paste
          - content: Nội dung văn bản cần tạo mã
-         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
          - exposure: Quyền riêng tư mã paste (0: Public, 1: Private)
+         - expiresAt: Thời gian hết hạn của mã paste (nếu có). vd: "2025-12-31 20:00:00"
+         - pasteName: Tên mã paste (nếu có)
       - Trả về: Trạng thái cập nhật
    - Xoá mã paste:
       - Url: http://localhost:5229/Paste/DeletePaste
