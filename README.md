@@ -46,3 +46,9 @@ BACKEND
       - Body:
          - pasteKey: Mã paste
       - Trả về: Trạng thái xoá
+
+
+FRONTEND
+1. Cách chạy frontend:
+ - B1: dùng terminal cd đến folder pastebin-frontend rồi chạy lệnh npm i
+ - B2: chạy lệnh npm run dev, thấy thông báo chạy trên port 5173 là ok
