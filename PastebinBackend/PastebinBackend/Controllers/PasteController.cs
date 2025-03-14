@@ -91,7 +91,7 @@ namespace PastebinBackend.Controllers
                 List<Paste> pastes = _context.Pastes.Where(p => p.Exposure == EnumPasteExposure.Public).OrderByDescending(p => p.CreatedAt).Take(10).ToList();
                 if (pastes.Any())
                 {
-                    return Content(String.Join("|", pastes.Select(p => $"pasteKey={p.PasteKey};createdAt={p.CreatedAt:yyyy-MM-dd HH:mm:ss}")));
+                    return Content(String.Join("|", pastes.Select(p => $"pasteKey={p.PasteKey};createdAt={p.CreatedAt:yyyy-MM-dd HH:mm:ss};pasteName={p.PasteName}")));
                 }
 
                 return Content("Không có dữ liệu");
