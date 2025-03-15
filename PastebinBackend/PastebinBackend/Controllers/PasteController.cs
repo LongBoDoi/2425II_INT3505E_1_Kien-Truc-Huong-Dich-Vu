@@ -47,7 +47,7 @@ namespace PastebinBackend.Controllers
             try
             {
                 Paste? paste = _context.Pastes.FirstOrDefault(p => p.PasteKey == pasteKey);
-                if (paste != null && paste.ExpiresAt > DateTime.UtcNow)
+                if (paste != null && (!paste.ExpiresAt.HasValue || paste.ExpiresAt > DateTime.UtcNow))
                 {
                     //Analytic? analytic = _context.Analytics.FirstOrDefault(a => a.PasteId == paste.Id && a.ViewDate.Date == DateTime.UtcNow.Date);
                     //if (analytic != null)
@@ -89,7 +89,7 @@ namespace PastebinBackend.Controllers
             try
             {
                 DateTime now = DateTime.UtcNow;
-                List<Paste> pastes = _context.Pastes.Where(p => p.Exposure == EnumPasteExposure.Public && p.ExpiresAt > now).OrderByDescending(p => p.CreatedAt).Take(10).ToList();
+                List<Paste> pastes = _context.Pastes.Where(p => p.Exposure == EnumPasteExposure.Public && (!p.ExpiresAt.HasValue || p.ExpiresAt > now)).OrderByDescending(p => p.CreatedAt).Take(10).ToList();
                 if (pastes.Any())
                 {
                     return Content(String.Join("|", pastes.Select(p => $"pasteKey={p.PasteKey};createdAt={p.CreatedAt:yyyy-MM-dd HH:mm:ss};pasteName={p.PasteName}")));
