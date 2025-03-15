@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getPasteContent } from "../services/pasteService";
-
+const API_BASE_URL = "http://localhost:5173";
 const ViewPastePage = () => {
   const { pasteKey } = useParams();
   const navigate = useNavigate();
-  const [title, setTitle] = useState(""); // Thêm state để lưu title
+  const [title, setTitle] = useState(""); 
   const [content, setContent] = useState("");
   const [createdAt, setCreatedAt] = useState("");
   const [views, setViews] = useState(0);
@@ -19,9 +19,12 @@ const ViewPastePage = () => {
     const fetchPaste = async () => {
       try {
         const pasteData = await getPasteContent(pasteKey);
-        console.log(pasteData)
+        console.log(pasteData);
         // Kiểm tra nếu paste không tồn tại hoặc đã hết hạn
-        if (!pasteData || pasteData.trim() === "Mã paste không tồn tại hoặc đã hết hạn") {
+        if (
+          !pasteData ||
+          pasteData.trim() === "Mã paste không tồn tại hoặc đã hết hạn"
+        ) {
           navigate("/expired-paste");
           return;
         }
@@ -50,11 +53,25 @@ const ViewPastePage = () => {
     fetchPaste();
   }, [pasteKey, navigate]);
 
+  const copyToClipboardFallback = (text) => {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    toast.success("Copied to clipboard!");
+  };
+
   const copyToClipboard = () => {
-    navigator.clipboard
-      .writeText(content)
-      .then(() => toast.success("Copied to clipboard!"))
-      .catch(() => toast.error("Failed to copy"));
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(`${API_BASE_URL}/paste/${pasteKey}`)
+        .then(() => toast.success("Copied to clipboard!"))
+        .catch(() => copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`));
+    } else {
+      copyToClipboardFallback(`${API_BASE_URL}`);
+    }
   };
 
   if (isLoading) {
