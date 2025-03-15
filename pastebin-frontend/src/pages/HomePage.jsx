@@ -25,13 +25,15 @@ const HomePage = () => {
               const [key, value] = part.split("=");
               pasteData[key] = value;
             });
-            
+
             // Chuyển đổi thời gian từ UTC sang giờ Việt Nam
             if (pasteData.createdAt) {
               const utcDate = new Date(pasteData.createdAt + " UTC");
-              pasteData.createdAt = utcDate.toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
+              pasteData.createdAt = utcDate.toLocaleString("vi-VN", {
+                timeZone: "Asia/Ho_Chi_Minh",
+              });
             }
-            
+
             return pasteData;
           })
           .filter((p) => p.pasteKey); // Lọc bỏ dòng trống nếu có
@@ -76,8 +78,13 @@ const HomePage = () => {
 
       {/* Recent Pastes */}
       <div style={styles.recentPastes}>
+        <h2 style={styles.recentTitle}>Recent Pastes</h2>
         {recentPastes.map((paste) => (
-          <Link to={`/paste/${paste.pasteKey}`} key={paste.pasteKey} style={styles.pasteLink}>
+          <Link
+            to={`/paste/${paste.pasteKey}`}
+            key={paste.pasteKey}
+            style={styles.pasteLink}
+          >
             <div style={styles.pasteCard}>
               <strong>{paste.pasteName || "Untitled"}</strong>
               <span style={styles.timestamp}>{paste.createdAt}</span>
@@ -143,6 +150,13 @@ const styles = {
     color: "#6B7280",
     marginTop: "4px",
   },
+  recentTitle: {
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "12px",
+    color: "#374151",
+  },
+  
 };
 
 export default HomePage;

@@ -83,9 +83,9 @@ const PasteForm = ({ onSubmit, isLoading }) => {
         >
           <option value="1h">1 Hour</option>
           <option value="1m">1 Minute</option>
-          <option value="never">Never</option>
           <option value="1d">1 Day</option>
           <option value="1mo">1 Month</option>
+          <option value="never">Never</option>
         </select>
       </div>
 

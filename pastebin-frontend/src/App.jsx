@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import HomePage from "./pages/HomePage"
 import ViewPastePage from "./pages/ViewPastePage"
 import NotFoundPage from "./pages/NotFoundPage"
+import ExpiredPastePage from "./pages/ExpiredPastePage"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/paste/:pasteKey" element={<ViewPastePage />} />
+            <Route path="/expired-paste" element={<ExpiredPastePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

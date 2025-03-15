@@ -19,13 +19,21 @@ const ViewPastePage = () => {
     const fetchPaste = async () => {
       try {
         const pasteData = await getPasteContent(pasteKey);
+        console.log(pasteData)
+        // Kiểm tra nếu paste không tồn tại hoặc đã hết hạn
+        if (!pasteData || pasteData.trim() === "Mã paste không tồn tại hoặc đã hết hạn") {
+          navigate("/expired-paste");
+          return;
+        }
+
+        // Xử lý dữ liệu khi paste hợp lệ
         const dataParts = pasteData.split(";").reduce((acc, part) => {
           const [key, value] = part.split("=");
           acc[key] = value;
           return acc;
         }, {});
 
-        setTitle(dataParts.pasteName || "Untitled"); // Gán title từ dữ liệu
+        setTitle(dataParts.pasteName || "Untitled");
         setContent(dataParts.content || "");
         setCreatedAt(
           new Date(dataParts.createdAt + "Z").toLocaleDateString("vi-VN")
@@ -33,14 +41,14 @@ const ViewPastePage = () => {
         setViews(Number(dataParts.views) || 0);
       } catch (err) {
         console.error("Error fetching paste:", err);
-        setError("Failed to load paste. It may have expired or been removed.");
+        navigate("/paste-not-found");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchPaste();
-  }, [pasteKey]);
+  }, [pasteKey, navigate]);
 
   const copyToClipboard = () => {
     navigator.clipboard
