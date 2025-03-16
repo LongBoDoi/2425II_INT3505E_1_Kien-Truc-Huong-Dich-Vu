@@ -8,7 +8,7 @@ const API_BASE_URL = "http://localhost:5173";
 const ViewPastePage = () => {
   const { pasteKey } = useParams();
   const navigate = useNavigate();
-  const [title, setTitle] = useState(""); 
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdAt, setCreatedAt] = useState("");
   const [views, setViews] = useState(0);
@@ -68,9 +68,11 @@ const ViewPastePage = () => {
       navigator.clipboard
         .writeText(`${API_BASE_URL}/paste/${pasteKey}`)
         .then(() => toast.success("Copied to clipboard!"))
-        .catch(() => copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`));
+        .catch(() =>
+          copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`)
+        );
     } else {
-      copyToClipboardFallback(`${API_BASE_URL}`);
+      copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`);
     }
   };
 
