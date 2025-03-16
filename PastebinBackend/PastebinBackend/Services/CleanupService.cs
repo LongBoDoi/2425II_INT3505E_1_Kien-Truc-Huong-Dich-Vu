@@ -13,6 +13,7 @@ public class CleanupService : BackgroundService
     public CleanupService(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
+	Console.WriteLine("Constructor called");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -25,6 +26,7 @@ public class CleanupService : BackgroundService
                 TimeSpan timeUntilMidnight = GetTimeUntilMidnight();
                 Console.WriteLine($"Thực thi task dọn dẹp trong {timeUntilMidnight}...");
 
+                // await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
                 await Task.Delay(timeUntilMidnight, stoppingToken); // Chờ task đến 00:00
 
                 using (var scope = _scopeFactory.CreateScope())

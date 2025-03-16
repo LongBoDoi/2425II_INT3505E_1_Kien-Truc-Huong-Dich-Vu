@@ -66,13 +66,13 @@ const ViewPastePage = () => {
   const copyToClipboard = () => {
     if (navigator.clipboard) {
       navigator.clipboard
-        .writeText(`${API_BASE_URL}/paste/${pasteKey}`)
+        .writeText(window.location.href)
         .then(() => toast.success("Copied to clipboard!"))
         .catch(() =>
-          copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`)
+          copyToClipboardFallback(window.location.href)
         );
     } else {
-      copyToClipboardFallback(`${API_BASE_URL}/paste/${pasteKey}`);
+      copyToClipboardFallback(window.location.href);
     }
   };
 
