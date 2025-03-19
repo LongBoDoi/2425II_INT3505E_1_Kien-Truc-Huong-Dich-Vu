@@ -47,7 +47,12 @@ namespace PastebinBackend.Controllers
         {
             try
             {
-                return Content(_context.Analytics.Count().ToString());
+                return Content(String.Join("|", _context.Analytics
+                    .OrderByDescending(a => a.ViewDate)
+                    .GroupBy(a => $"{a.ViewDate:yyyy-MM}")
+                    .Select(a => $"time={a};views={a.Count()}")
+                    .ToList()
+                ));
             }
             catch (Exception e)
             {
