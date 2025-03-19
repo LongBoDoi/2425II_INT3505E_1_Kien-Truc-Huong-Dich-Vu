@@ -15,5 +15,10 @@ namespace PastebinBackend.Models
         /// Ngày xem
         /// </summary>
         public DateTime ViewDate { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Số lượt xem
+        /// </summary>
+        public int ViewCount { get; set; }
     }
 }

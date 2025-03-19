@@ -23,7 +23,22 @@ namespace PastebinBackend.Controllers
         {
             try
             {
-                _context.Analytics.Add(new Analytic());
+                var now = DateTime.UtcNow;
+
+                Analytic? existedRecord = _context.Analytics.FirstOrDefault(a => $"{a.ViewDate:yyyy-MM}" == $"{now:yyyy-MM}");
+                if (existedRecord != null)
+                {
+                    existedRecord.ViewCount++;
+                    _context.Entry(existedRecord).State = EntityState.Modified;
+                } else
+                {
+                    existedRecord = new Analytic
+                    {
+                        ViewDate = now,
+                        ViewCount = 1
+                    };
+                    _context.Analytics.Add(existedRecord);
+                }
 
                 if (_context.SaveChanges() > 0)
                 {
@@ -49,8 +64,7 @@ namespace PastebinBackend.Controllers
             {
                 return Content(String.Join("|", _context.Analytics
                     .OrderByDescending(a => a.ViewDate)
-                    .GroupBy(a => $"{a.ViewDate:yyyy-MM}")
-                    .Select(a => $"time={a};views={a.Count()}")
+                    .Select(a => $"time={a.ViewDate:yyyy-MM};views={a.ViewCount}")
                     .ToList()
                 ));
             }
