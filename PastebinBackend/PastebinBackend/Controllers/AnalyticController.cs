@@ -58,21 +58,37 @@ namespace PastebinBackend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetViewAnalyticByDay()
+        [HttpGet]
+    public IActionResult GetViewAnalyticByDay(string month)
+    {
+        try
         {
-            try
+            if (string.IsNullOrEmpty(month) || !DateTime.TryParseExact(month + "-01", "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime parsedMonth))
             {
-                return Content(String.Join("|", _context.Analytics
-                    .OrderByDescending(a => a.ViewDate)
-                    .Select(a => $"time={a.ViewDate:yyyy-MM-dd};views={a.ViewCount}")
-                    .ToList()
-                ));
+                return Content("Vui lòng cung cấp tháng theo định dạng yyyy-MM");
             }
-            catch (Exception e)
+
+            var analyticsData = _context.Analytics
+                .Where(a => a.ViewDate.Year == parsedMonth.Year && a.ViewDate.Month == parsedMonth.Month)
+                .OrderByDescending(a => a.ViewDate.Date)
+                .Select(a => $"time={a.ViewDate:yyyy-MM-dd};views={a.ViewCount}") 
+                .ToList();
+
+            if (!analyticsData.Any())
             {
-                return Content($"Có lỗi xảy ra: {e.Message}");
+                return Content($"Không có dữ liệu cho tháng {month}");
             }
+
+            return Content(string.Join("|", analyticsData)); // Nối các phần tử bằng "|"
         }
+        catch (Exception e)
+        {
+            return Content($"Có lỗi xảy ra: {e.Message}");
+        }
+    }
+
+
+
 
         /// <summary>
         /// Lấy số view trang web
@@ -85,10 +101,11 @@ namespace PastebinBackend.Controllers
             {
                 return Content(String.Join("|", _context.Analytics
                     .GroupBy(a => new { a.ViewDate.Month, a.ViewDate.Year})
+                     .AsEnumerable()
                     .Select(g => new
                     {
                         Year = g.Key.Year,
-                        Month = g.Key.Month,
+                         Month = g.Key.Month.ToString("D2"),
                         ViewCount = g.Count()
                     })
                     .OrderByDescending(g => g.Year).ThenByDescending(g => g.Month)
