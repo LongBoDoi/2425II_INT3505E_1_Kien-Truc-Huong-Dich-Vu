@@ -50,7 +50,7 @@ BACKEND
       - Url: http://localhost:5229/Analytic/AddViewAnalytic
       - Method: POST
    - Lấy số lượng view theo ngày:
-      - Url: http://localhost:5229/Analytic/GetViewAnalyticByDay
+      - Url: http://localhost:5229/Analytic/GetViewAnalyticByDay?month=${month}
       - Method: GET
       - Trả về: Số lượng view của trang theo ngày
    - Lấy số lượng view theo tháng:
