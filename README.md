@@ -46,6 +46,13 @@ BACKEND
       - Body:
          - pasteKey: Mã paste
       - Trả về: Trạng thái xoá
+   - Tăng số lượng view cho trang:
+      - Url: http://localhost:5229/Analytic/AddViewAnalytic
+      - Method: POST
+   - Lấy số lượng view cho trang:
+      - Url: http://localhost:5229/Analytic/GetViewAnalytic
+      - Method: GET
+      - Trả về: Số lượng view của trang
 
 
 FRONTEND

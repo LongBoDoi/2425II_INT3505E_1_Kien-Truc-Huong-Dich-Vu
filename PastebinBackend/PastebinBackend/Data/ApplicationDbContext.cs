@@ -20,12 +20,12 @@ namespace PastebinBackend.Data
                 .HasIndex(p => p.PasteKey)
                 .IsUnique();
 
-            // Foreign key bảng Paste - Analytic
-            modelBuilder.Entity<Analytic>()
-                .HasOne(a => a.Paste)
-                .WithMany()
-                .HasForeignKey(a => a.PasteId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //// Foreign key bảng Paste - Analytic
+            //modelBuilder.Entity<Analytic>()
+            //    .HasOne(a => a.Paste)
+            //    .WithMany()
+            //    .HasForeignKey(a => a.PasteId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
