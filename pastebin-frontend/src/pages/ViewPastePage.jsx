@@ -28,8 +28,6 @@ const ViewPastePage = () => {
           navigate("/expired-paste");
           return;
         }
-
-        // Xử lý dữ liệu khi paste hợp lệ
         const dataParts = pasteData.split(";").reduce((acc, part) => {
           const [key, value] = part.split("=");
           acc[key] = value;

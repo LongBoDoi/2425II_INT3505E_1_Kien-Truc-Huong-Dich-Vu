@@ -1,6 +1,4 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-console.log(API_BASE_URL)
 /**
  * Creates a new paste using FormData (multipart/form-data)
  * @param {string} content - The content of the paste
@@ -74,3 +72,57 @@ export const getRecentPastes = async () => {
   }
 };
 
+/**
+ * Increments the total view count for the website
+ * @returns {Promise<void>}
+ */
+export const addViewAnalytic = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/Analytic/AddViewAnalytic`, {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error adding view analytic:", error);
+    throw error;
+  }
+};
+/**
+ * Gets the daily view count for a specific month
+ * @param {string} month - The month in YYYY-MM format
+ * @returns {Promise<string>} - The raw text response
+ */
+export const getMonthViewAnalytic = async (month) => {
+  try {
+    console.log((month))
+    const response = await fetch(`${API_BASE_URL}/Analytic/GetViewAnalyticByDay?month=${month}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return await response.text(); 
+  } catch (error) {
+    console.error("Error fetching month view analytic:", error);
+    throw error;
+  }
+};
+/**
+ * Gets the total view count for the website
+ * @returns {Promise<number>} - The total view count
+ */
+export const getViewAnalytic = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/Analytic/GetViewAnalyticByMonth`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return await response.text(); 
+  } catch (error) {
+    console.error("Error fetching view analytic:", error);
+    throw error;
+  }; 
+};

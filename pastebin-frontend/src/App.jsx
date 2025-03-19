@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage"
 import ViewPastePage from "./pages/ViewPastePage"
 import NotFoundPage from "./pages/NotFoundPage"
 import ExpiredPastePage from "./pages/ExpiredPastePage"
-
+import ViewAnalytic from "./pages/ViewAnalytic"; 
 function App() {
   return (
     <Router>
@@ -17,6 +17,7 @@ function App() {
             <Route path="/paste/:pasteKey" element={<ViewPastePage />} />
             <Route path="/expired-paste" element={<ExpiredPastePage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/view-analytic" element={<ViewAnalytic />} />
           </Routes>
         </main>
         <Toaster position="bottom-right" />

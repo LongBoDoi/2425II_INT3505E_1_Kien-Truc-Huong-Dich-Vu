@@ -21,9 +21,12 @@ const Navbar = () => {
           </svg>
           PasteBin
         </Link>
-        <div>
+        <div style={styles.navLinks}>
           <Link to="/" style={styles.link}>
             New Paste
+          </Link>
+          <Link to="/view-analytic" style={styles.analyticsLink}>
+            View Analytics
           </Link>
         </div>
       </div>
@@ -58,7 +61,19 @@ const styles = {
     height: "24px",
     marginRight: "8px",
   },
+  navLinks: {
+    display: "flex",
+    gap: "12px",
+  },
   link: {
+    padding: "8px 16px",
+    borderRadius: "4px",
+    textDecoration: "none",
+    color: "white",
+    transition: "background-color 0.3s",
+    cursor: "pointer",
+  },
+  analyticsLink: {
     padding: "8px 16px",
     borderRadius: "4px",
     textDecoration: "none",
@@ -69,6 +84,7 @@ const styles = {
 };
 
 // Hover effect cho inline style
-styles.link["&:hover"] = { backgroundColor: "#4338ca" }; // hover:bg-indigo-700
+styles.link["&:hover"] = { backgroundColor: "#3730a3" }; 
+styles.analyticsLink["&:hover"] = { backgroundColor: "#1e40af" }; 
 
 export default Navbar;
