@@ -22,7 +22,7 @@ public class FakeAnalyticDataService : BackgroundService
         {
             try
             {
-                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
@@ -38,7 +38,7 @@ public class FakeAnalyticDataService : BackgroundService
 
                     DateTime randomDate = start + randomTimeSpan;
 
-                    Analytic? existedRecord = dbContext.Analytics.FirstOrDefault(a => a.ViewDate.Year == randomDate.Year && a.ViewDate.Month == randomDate.Month);
+                    Analytic? existedRecord = dbContext.Analytics.FirstOrDefault(a => a.ViewDate.Date == randomDate.Date);
                     if (existedRecord != null)
                     {
                         existedRecord.ViewCount++;
