@@ -23,7 +23,7 @@ BACKEND
          - pasteName: Tên mã paste (nếu có)
       - Trả về: Mã paste được tạo (16 ký tự)
    - Lấy dữ liệu mã paste:
-      - Url: http://localhost:5229/Paste/GetPasteContent?pasteKey={mã paste}
+      - Url: http://localhost:5229/Paste/GetPasteData?pasteKey={mã paste}
       - Method: GET
       - Trả về: Dữ liệu của mã paste
    - Lấy danh sách mã paste public được tạo gần đây:
