@@ -28,12 +28,25 @@ const ViewPastePage = () => {
           navigate("/expired-paste");
           return;
         }
-        const dataParts = pasteData.split(";").reduce((acc, part) => {
-          const [key, value] = part.split("=");
-          acc[key] = value;
-          return acc;
-        }, {});
+        const extractField = (data, field) => {
+          const regex = new RegExp(
+            `${field}=(.*?)(?=;(?:content|createdAt|views|pasteName)=|$)`,
+            "s"
+          );
+          const match = data.match(regex);
+          return match ? match[1].trim() : null;
+        };
 
+        const dataParts = {
+          content: extractField(pasteData, "content"),
+          createdAt: extractField(pasteData, "createdAt"),
+          views: extractField(pasteData, "views"),
+          pasteName: extractField(pasteData, "pasteName"),
+        };
+
+        console.log(dataParts);
+
+        console.log(dataParts);
         setTitle(dataParts.pasteName || "Untitled");
         setContent(dataParts.content || "");
         setCreatedAt(
