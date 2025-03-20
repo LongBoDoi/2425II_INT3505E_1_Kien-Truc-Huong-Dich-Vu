@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 public class CleanupService : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly string _logPath = Path.Combine(Directory.GetCurrentDirectory(), "Log", "CleanupLog.txt");
+    private readonly string _logPath = Path.Combine(Directory.GetCurrentDirectory(), "Log");
+    private readonly string _logFile = "CleanupLog.txt";
 
     public CleanupService(IServiceScopeFactory scopeFactory)
     {
@@ -75,9 +76,9 @@ public class CleanupService : BackgroundService
                 Directory.CreateDirectory(_logPath);
             }
 
-            if (!File.Exists(_logPath))
+            if (!File.Exists(Path.Combine(_logPath, _logFile)))
             {
-                File.Create(_logPath).Dispose(); // Create and close the file
+                File.Create(Path.Combine(_logPath, _logFile)).Dispose(); // Create and close the file
             }
         }
         catch (Exception ex)
