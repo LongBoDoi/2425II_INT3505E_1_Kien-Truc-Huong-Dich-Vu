@@ -14,7 +14,6 @@ if (!String.IsNullOrEmpty(connectionString))
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHostedService<FakeAnalyticDataService>();
 builder.Services.AddHostedService<CleanupService>();
 
 //CORS policy

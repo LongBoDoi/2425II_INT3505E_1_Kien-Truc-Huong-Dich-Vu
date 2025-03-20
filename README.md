@@ -23,7 +23,7 @@ BACKEND
          - pasteName: Tên mã paste (nếu có)
       - Trả về: Mã paste được tạo (16 ký tự)
    - Lấy dữ liệu mã paste:
-      - Url: http://localhost:5229/Paste/GetPasteContent?pasteKey={mã paste}
+      - Url: http://localhost:5229/Paste/GetPasteData?pasteKey={mã paste}
       - Method: GET
       - Trả về: Dữ liệu của mã paste
    - Lấy danh sách mã paste public được tạo gần đây:
@@ -50,7 +50,7 @@ BACKEND
       - Url: http://localhost:5229/Analytic/AddViewAnalytic
       - Method: POST
    - Lấy số lượng view theo ngày:
-      - Url: http://localhost:5229/Analytic/GetViewAnalyticByDay
+      - Url: http://localhost:5229/Analytic/GetViewAnalyticByDay?month=${month}
       - Method: GET
       - Trả về: Số lượng view của trang theo ngày
    - Lấy số lượng view theo tháng:
