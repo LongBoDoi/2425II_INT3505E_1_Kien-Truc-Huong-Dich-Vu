@@ -92,7 +92,7 @@ public class CleanupService : BackgroundService
     {
         try
         {
-            File.AppendAllText(_logPath, $"[{DateTime.UtcNow}]: {message}\n");
+            File.AppendAllText(Path.Combine(_logPath, _logFile), $"[{DateTime.UtcNow}]: {message}\n");
         }
         catch (Exception ex)
         {
