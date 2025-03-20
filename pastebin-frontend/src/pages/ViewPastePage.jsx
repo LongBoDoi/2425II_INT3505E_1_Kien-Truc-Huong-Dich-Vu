@@ -19,7 +19,6 @@ const ViewPastePage = () => {
     const fetchPaste = async () => {
       try {
         const pasteData = await getPasteContent(pasteKey);
-        console.log(pasteData);
         // Kiểm tra nếu paste không tồn tại hoặc đã hết hạn
         if (
           !pasteData ||

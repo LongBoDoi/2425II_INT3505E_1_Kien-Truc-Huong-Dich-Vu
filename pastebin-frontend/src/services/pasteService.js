@@ -7,7 +7,6 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
  */
 export const createPaste = async (content, expiresAt = null, exposure, title) => {
   try {
-    console.log(title);
     const formData = new FormData();
     formData.append("content", content);
     if (expiresAt) formData.append("expiresAt", expiresAt);
