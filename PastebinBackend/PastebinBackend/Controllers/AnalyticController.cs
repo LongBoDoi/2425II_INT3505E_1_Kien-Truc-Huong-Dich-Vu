@@ -58,37 +58,33 @@ namespace PastebinBackend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [HttpGet]
-    public IActionResult GetViewAnalyticByDay(string month)
-    {
-        try
+        public IActionResult GetViewAnalyticByDay(string month)
         {
-            if (string.IsNullOrEmpty(month) || !DateTime.TryParseExact(month + "-01", "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime parsedMonth))
+            try
             {
-                return Content("Vui lòng cung cấp tháng theo định dạng yyyy-MM");
+                if (string.IsNullOrEmpty(month) || !DateTime.TryParseExact(month + "-01", "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime parsedMonth))
+                {
+                    return Content("Vui lòng cung cấp tháng theo định dạng yyyy-MM");
+                }
+
+                var analyticsData = _context.Analytics
+                    .Where(a => a.ViewDate.Year == parsedMonth.Year && a.ViewDate.Month == parsedMonth.Month)
+                    .OrderByDescending(a => a.ViewDate.Date)
+                    .Select(a => $"time={a.ViewDate:yyyy-MM-dd};views={a.ViewCount}") 
+                    .ToList();
+
+                if (!analyticsData.Any())
+                {
+                    return Content($"Không có dữ liệu cho tháng {month}");
+                }
+
+                return Content(string.Join("|", analyticsData)); // Nối các phần tử bằng "|"
             }
-
-            var analyticsData = _context.Analytics
-                .Where(a => a.ViewDate.Year == parsedMonth.Year && a.ViewDate.Month == parsedMonth.Month)
-                .OrderByDescending(a => a.ViewDate.Date)
-                .Select(a => $"time={a.ViewDate:yyyy-MM-dd};views={a.ViewCount}") 
-                .ToList();
-
-            if (!analyticsData.Any())
+            catch (Exception e)
             {
-                return Content($"Không có dữ liệu cho tháng {month}");
+                return Content($"Có lỗi xảy ra: {e.Message}");
             }
-
-            return Content(string.Join("|", analyticsData)); // Nối các phần tử bằng "|"
         }
-        catch (Exception e)
-        {
-            return Content($"Có lỗi xảy ra: {e.Message}");
-        }
-    }
-
-
-
 
         /// <summary>
         /// Lấy số view trang web
@@ -112,57 +108,6 @@ namespace PastebinBackend.Controllers
                     .Select(g => $"time={g.Year}-{g.Month};views={g.ViewCount}") 
                     .ToList()
                 ));
-            }
-            catch (Exception e)
-            {
-                return Content($"Có lỗi xảy ra: {e.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Tăng số view cho trang
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult FakeAnalyticData()
-        {
-            try
-            {
-                for (int i = 0; i < 100; i++)
-                {
-                    DateTime start = new DateTime(2024, 1, 1, 0, 0, 0);
-                    DateTime end = DateTime.UtcNow;
-
-                    Random random = new Random();
-                    TimeSpan range = end - start;
-
-                    TimeSpan randomTimeSpan = new TimeSpan((long)(random.NextDouble() * range.Ticks));
-
-                    DateTime randomDate = start + randomTimeSpan;
-
-                    Analytic? existedRecord = _context.Analytics.FirstOrDefault(a => a.ViewDate.Date == randomDate.Date);
-                    if (existedRecord != null)
-                    {
-                        existedRecord.ViewCount++;
-                        _context.Entry(existedRecord).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        existedRecord = new Analytic
-                        {
-                            ViewDate = randomDate,
-                            ViewCount = 1
-                        };
-                        _context.Analytics.Add(existedRecord);
-                    }
-                }
-
-                if (_context.SaveChanges() > 0)
-                {
-                    return Content("Fake data Analytic thành công");
-                }
-
-                return Content("Lỗi khi lưu bản ghi vào database");
             }
             catch (Exception e)
             {
