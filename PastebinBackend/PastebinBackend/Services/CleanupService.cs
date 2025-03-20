@@ -9,25 +9,29 @@ using System.Threading.Tasks;
 public class CleanupService : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
+    private readonly string _logPath = Path.Combine(Directory.GetCurrentDirectory(), "Log", "CleanupLog.txt");
 
     public CleanupService(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
-	Console.WriteLine("Constructor called");
+        EnsureLogFileExists();
+        WriteLog("CleanupService initialized.");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
+            WriteLog("Cleanup started");
             try
             {
                 // Tính thời gian còn lại tới nửa đêm
                 TimeSpan timeUntilMidnight = GetTimeUntilMidnight();
-                Console.WriteLine($"Thực thi task dọn dẹp trong {timeUntilMidnight}...");
 
                 // await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
                 await Task.Delay(timeUntilMidnight, stoppingToken); // Chờ task đến 00:00
+
+                WriteLog("Running cleanup...");
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
@@ -42,17 +46,12 @@ public class CleanupService : BackgroundService
                     {
                         dbContext.Pastes.RemoveRange(expiredPastes);
                         await dbContext.SaveChangesAsync();
-                        Console.WriteLine($"Đã dọn {expiredPastes.Count} mã paste hết hạn vào lúc {now}.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Không có mã paste hết hạn vào lúc {now}.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Có lỗi xảy ra: {ex.Message}");
+                WriteLog($"Có lỗi xảy ra: {ex.Message}");
             }
         }
     }
@@ -62,5 +61,41 @@ public class CleanupService : BackgroundService
         DateTime now = DateTime.UtcNow;
         DateTime nextMidnight = now.Date.AddDays(1);
         return nextMidnight - now;
+    }
+
+    /// <summary>
+    /// Kiểm tra file log tồn tại
+    /// </summary>
+    private void EnsureLogFileExists()
+    {
+        try
+        {
+            if (!Directory.Exists(_logPath))
+            {
+                Directory.CreateDirectory(_logPath);
+            }
+
+            if (!File.Exists(_logPath))
+            {
+                File.Create(_logPath).Dispose(); // Create and close the file
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating log file: {ex.Message}");
+        }
+    }
+
+    // Helper method to write logs safely
+    private void WriteLog(string message)
+    {
+        try
+        {
+            File.AppendAllText(_logPath, $"[{DateTime.UtcNow}]: {message}\n");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error writing to log file: {ex.Message}");
+        }
     }
 }
