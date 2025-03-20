@@ -35,7 +35,6 @@ const ViewAnalytic = () => {
             };
           })
           .sort((a, b) => new Date(a.date) - new Date(b.date));
-        console.log(formattedData)
         setAllMonthlyData(formattedData);
         setMonthlyViewData(formattedData.slice(-monthsToShow));
         if (formattedData.length > 0) {
@@ -65,7 +64,6 @@ const ViewAnalytic = () => {
         let dailyData = {};
         for (const month of allMonthlyData) {
           const data = await getMonthViewAnalytic(month.date);
-          console.log(data)
           dailyData[month.date] = data
             .split("|")
             .map((entry) => {
