@@ -96,7 +96,6 @@ export const addViewAnalytic = async () => {
  */
 export const getMonthViewAnalytic = async (month) => {
   try {
-    console.log((month))
     const response = await fetch(`${API_BASE_URL}/Analytic/GetViewAnalyticByDay?month=${month}`);
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
